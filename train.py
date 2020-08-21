@@ -98,7 +98,7 @@ def get_callbacks(arguments):
         join(arguments.check_dir, arguments.output_name + '_model_' + arguments.time + '.hdf5'),
         monitor=monitor_name, save_best_only=True, save_weights_only=False,
         verbose=1, mode='max')
-    lr_reducer = ReduceLROnPlateau(monitor=monitor_name, factor=0.05, cooldown=0, patience=50, verbose=1, mode='max')
+    lr_reducer = ReduceLROnPlateau(monitor=monitor_name, factor=0.05, cooldown=0, patience=5, verbose=1, mode='max')
     early_stopper = EarlyStopping(monitor=monitor_name, min_delta=0, patience=arguments.patience, verbose=0, mode='max')
 
     return [model_checkpoint, csv_logger, lr_reducer, early_stopper, tb]
