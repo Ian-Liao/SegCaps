@@ -105,7 +105,7 @@ def CapsNetR3(input_shape, n_class=2, enable_decoder=True):
         recon_2 = layers.Conv2D(filters=128, kernel_size=1, padding='same', kernel_initializer='he_normal',
                                 activation='relu', name='recon_2')(recon_1)
 
-        out_recon = layers.Conv2D(filters=1, kernel_size=1, padding='same', kernel_initializer='he_normal',
+        out_recon = layers.Conv2D(filters=3, kernel_size=1, padding='same', kernel_initializer='he_normal',
                                   activation='sigmoid', name='out_recon')(recon_2)
 
         return out_recon
@@ -117,7 +117,7 @@ def CapsNetR3(input_shape, n_class=2, enable_decoder=True):
     else:
         eval_model = models.Model(inputs=x, outputs=[out_seg])
     # manipulate model
-    noise = layers.Input(shape=((H.value, W.value, C.value, A.value)))
+    noise = layers.Input(shape=(H.value, W.value, C.value, A.value))
     noised_seg_caps = layers.Add()([seg_caps, noise])
     masked_noised_y = Mask()([noised_seg_caps, y])
     manipulate_model = models.Model(inputs=[x, y, noise], outputs=shared_decoder(masked_noised_y))
@@ -277,7 +277,7 @@ def CapsNetBasic(input_shape, n_class=2):
     eval_model = models.Model(inputs=x, outputs=[out_seg, shared_decoder(masked)])
 
     # manipulate model
-    noise = layers.Input(shape=((H.value, W.value, C.value, A.value)))
+    noise = layers.Input(shape=(H.value, W.value, C.value, A.value))
     noised_seg_caps = layers.Add()([seg_caps, noise])
     masked_noised_y = Mask()([noised_seg_caps, y])
     manipulate_model = models.Model(inputs=[x, y, noise], outputs=shared_decoder(masked_noised_y))
