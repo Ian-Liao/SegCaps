@@ -62,7 +62,7 @@ from utils.model_helper import create_model
 
 time = strftime("%Y%m%d-%H%M%S", gmtime())
 RESOLUTION = 512  # Resolution of the input for the model.
-GRAYSCALE = True
+GRAYSCALE = False
 LOGGING_FORMAT = '%(levelname)s %(asctime)s: %(message)s'
 
 
