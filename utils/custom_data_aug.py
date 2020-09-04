@@ -35,6 +35,7 @@ from keras.preprocessing.image import random_rotation, random_shift, random_zoom
 from scipy.ndimage.interpolation import map_coordinates
 
 GRAYSCALE = True
+MODE = "L"
 RESOLUTION = 512
 COCO_BACKGROUND = (68, 1, 84, 255)
 MASK_BACKGROUND = (0, 0, 0, 0)
@@ -206,7 +207,8 @@ def process_image(img, shift, resolution):
         resolution: change image resolution to fit model.
     '''
     # Add 5 for each pixel on the grayscale image.
-    img = image_enhance(img, shift=shift)
+    if MODE != "L":
+        img = image_enhance(img, shift=shift)
 
     # The source image should be 512X512 resolution.
     img = image_resize2square(img, resolution)
@@ -261,13 +263,14 @@ def convert_img_data(img, dims=4, resolution=RESOLUTION):
     3. Normalized data
     4. reshape to require dimension 3 or 4 
     '''
-    img = img[:, :, :3]
+    # img = img[:, :, :3]
     if GRAYSCALE == True:
         # Add 1 for each pixel and change resolution on the image.
         img = process_image(img, shift=1, resolution=resolution)
 
-        # Translate the image to 24bits grayscale by PILLOW package
-        img = image2float_array(img, 16777216 - 1)  # 2^24=16777216
+        if MODE != "L":
+            # Translate the image to 24bits grayscale by PILLOW package
+            img = image2float_array(img, 16777216 - 1)  # 2^24=16777216
         if dims == 3:
             # Reshape numpy from 2 to 3 dimensions
             img = img.reshape([img.shape[0], img.shape[1], 1])
@@ -332,4 +335,4 @@ def augmentImages(batch_of_images, batch_of_masks):
         batch_of_masks[batch_of_masks > 0.5] = 1
         batch_of_masks[batch_of_masks <= 0.5] = 0
 
-    return (batch_of_images, batch_of_masks)
+    return batch_of_images, batch_of_masks
