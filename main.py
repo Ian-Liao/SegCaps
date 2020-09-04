@@ -62,7 +62,7 @@ from utils.model_helper import create_model
 
 time = strftime("%Y%m%d-%H%M%S", gmtime())
 RESOLUTION = 512  # Resolution of the input for the model.
-GRAYSCALE = False
+GRAYSCALE = True
 LOGGING_FORMAT = '%(levelname)s %(asctime)s: %(message)s'
 
 
@@ -82,10 +82,11 @@ def main(args):
     # Get image properties from first image. Assume they are all the same.
     logging.info('\nRead image files...%s' % (join(args.data_root_dir, 'imgs', train_list[0][0])))
     # Get image shape from the first image.
-    image = sitk.GetArrayFromImage(sitk.ReadImage(join(args.data_root_dir, 'imgs', train_list[0][0])))
-    img_shape = image.shape  # # (x, y, channels)
+    # image = sitk.GetArrayFromImage(sitk.ReadImage(join(args.data_root_dir, 'imgs', train_list[0][0])))
+    # img_shape = image.shape  # # (x, y, channels)
     if args.dataset == 'luna16':
-        net_input_shape = (img_shape[1], img_shape[2], args.slices)
+        pass
+        # net_input_shape = (img_shape[1], img_shape[2], args.slices)
     else:
         args.slices = 1
         if GRAYSCALE:
