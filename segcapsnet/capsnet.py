@@ -105,7 +105,7 @@ def CapsNetR3(input_shape, n_class=2, enable_decoder=True):
         recon_2 = layers.Conv2D(filters=128, kernel_size=1, padding='same', kernel_initializer='he_normal',
                                 activation='relu', name='recon_2')(recon_1)
 
-        out_recon = layers.Conv2D(filters=3, kernel_size=1, padding='same', kernel_initializer='he_normal',
+        out_recon = layers.Conv2D(filters=1, kernel_size=1, padding='same', kernel_initializer='he_normal',
                                   activation='sigmoid', name='out_recon')(recon_2)
 
         return out_recon
