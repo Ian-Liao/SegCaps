@@ -105,7 +105,7 @@ pycparser==2.20
 pycrypto==2.6.1
 pydot==1.4.1
 pygal==2.4.0
-Pygments==2.2.0
+Pygments==2.7.4
 PyJWT==1.5.3
 pylint==1.9.4
 pyOpenSSL==17.5.0
